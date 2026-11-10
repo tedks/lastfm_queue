@@ -1,0 +1,8 @@
+module(name = "lastfm_queue", version = "0.1.0")
+
+bazel_dep(name = "rules_python", version = "2.3.2")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.defaults(python_version = "3.12")
+python.toolchain(python_version = "3.12")
+use_repo(python, "python_3_12")

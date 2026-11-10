@@ -1,0 +1,18 @@
+"""Portable queue parser; the Rhythmbox plugin remains a host-bound runtime."""
+
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "queue_tracks",
+    srcs = ["queue_tracks.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_test(
+    name = "queue_tracks_test",
+    srcs = ["tests/test_queue_tracks.py"],
+    main = "tests/test_queue_tracks.py",
+    legacy_create_init = 0,
+    size = "small",
+    deps = [":queue_tracks"],
+)
