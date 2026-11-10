@@ -26,7 +26,7 @@ from lastfmqueue_rb3compat import ApplicationShell
 import rb
 import urllib
 import random
-from xml.dom import minidom
+from lastfmqueue_tracks import parse_similar_tracks, track_artist_title
 
 import gettext
 gettext.install('rhythmbox', RB.locale_dir(), unicode=True)
@@ -142,15 +142,11 @@ class LastFmQueuePlugin (GObject.Object, Peas.Activatable):
         if not data:
             return
         self.similar_data = data
-        dom = minidom.parseString(data)
-        tracks = dom.getElementsByTagName('track')
+        tracks = parse_similar_tracks(data)
         random.shuffle(tracks)
 
         for track in tracks:
-            names = track.getElementsByTagName('name')
-            title = names[0].firstChild.data.encode('utf-8')
-            artist = names[1].firstChild.data.encode('utf-8')
-
+            artist, title = track_artist_title(track)
             if self.find_track(artist, title):
                 break
 
